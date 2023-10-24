@@ -9,7 +9,8 @@ console.log(json)
 
 // Step 2: Filter specific data we want to keep and write to a new JSON file
 const statusArray = Object.values(json); // convert property values into an array
-const filteredPlatformStatus = statusArray.map(item => ({ 
+const filteredPlatformStatus = statusArray.map(item => ({
+    name: 'Cleansing services',
     status: item.status,
     last_polled_time: item.last_polled_time,
     code: item.code,
