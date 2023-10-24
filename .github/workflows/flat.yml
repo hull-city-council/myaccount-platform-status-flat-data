@@ -41,5 +41,5 @@ jobs:
           http_url: ${{ secrets.LIM_SYSTEM_STATUS_URL }} # The data to fetch
           mask: true
           authorization: 'Zoho-oauthtoken ${{ fromJson(steps.refreshToken.outputs.response).access_token }}'
-          downloaded_filename: myaccount-platform-status.json # The http_url gets saved and renamed in our repository
-          postprocess: postprocess.js # A postprocessing javascript or typescript file written in Deno
+          downloaded_filename: myaccount-platform-status-1.json # The http_url gets saved and renamed in our repository
+          postprocess: postprocess-concat.js # A postprocessing javascript or typescript file written in Deno
