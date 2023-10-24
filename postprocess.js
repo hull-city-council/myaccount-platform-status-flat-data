@@ -13,7 +13,7 @@ const filteredPlatformStatus = statusArray.map(item => ({
     status: item.status,
     last_polled_time: item.last_polled_time,
     code: item.code,
-    name: item.data.name
+    id: item.monitor_id
 }));
 
 // Step 3. Write a new JSON file with our filtered data
