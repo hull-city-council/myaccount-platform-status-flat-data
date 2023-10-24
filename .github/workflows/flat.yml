@@ -14,6 +14,13 @@ jobs:
       # The first step is to check out the repository so it can read the files inside of it and do other operations
       - name: Check out repo
         uses: actions/checkout@v3
+      # Refresh token
+      - name: Refresh oauth token
+        id: refreshToken
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.REFRESH_URL }}
+          method: 'POST'
       # This step installs Deno, which is a new Javascript runtime that improves on Node. We'll use it for postprocessing later
       - name: Setup deno
         uses: denoland/setup-deno@main
@@ -25,7 +32,7 @@ jobs:
         with:
           http_url: ${{ secrets.CLEANSING_SYSTEM_STATUS_URL }} # The data to fetch
           mask: true
-          authorization: ${{ secrets.AUTHORIZATION }}
+          authorization: ${{ fromJson(steps.refreshToken.outputs.response).access_token }}
           downloaded_filename: myaccount-platform-status.json # The http_url gets saved and renamed in our repository
           postprocess: postprocess.js # A postprocessing javascript or typescript file written in Deno
       - name: Fetch data
@@ -33,6 +40,6 @@ jobs:
         with:
           http_url: ${{ secrets.LIM_SYSTEM_STATUS_URL }} # The data to fetch
           mask: true
-          authorization: ${{ secrets.AUTHORIZATION }}
+          authorization: ${{ fromJson(steps.refreshToken.outputs.response).access_token }}
           downloaded_filename: myaccount-platform-status.json # The http_url gets saved and renamed in our repository
           postprocess: postprocess.js # A postprocessing javascript or typescript file written in Deno
