@@ -20,8 +20,15 @@ jobs:
         with:
           deno-version: v1.x
       # The third step is a Flat Action step. We fetch the data in the http_url and save it as downloaded_filename
-      - name: Fetch data 
+      - name: Fetch data
         uses: githubocto/flat@mr/node16
         with:
-          http_url: ${{ secrets.CHECK_STATUS_URL }} # The data to fetch
+          http_url: ${{ secrets.CLEANSING_SYSTEM_STATUS_URL }} # The data to fetch
+          authorization: ${{ secrets.AUTHORIZATION }}
+          downloaded_filename: myaccount-platform-status.json # The http_url gets saved and renamed in our repository
+      - name: Fetch data
+        uses: githubocto/flat@mr/node16
+        with:
+          http_url: ${{ secrets.LIM_SYSTEM_STATUS_URL }} # The data to fetch
+          authorization: ${{ secrets.AUTHORIZATION }}
           downloaded_filename: myaccount-platform-status.json # The http_url gets saved and renamed in our repository
